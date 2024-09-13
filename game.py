@@ -9,6 +9,9 @@ empitySpaces = HEIGHT*WIDTH
 
 
 def showBoard():
+    print("")
+    print(f"Player 1 - {scores[PLAYER1]} | Player 2 - {scores[PLAYER2]} ")
+    print(f"Turn - {scores[0]}")
     for i in range(0, HEIGHT):
         print("")
         for j in range(0, WIDTH):
@@ -175,10 +178,12 @@ def checkWin(player: int, row: int, col: int):
             elif player == PLAYER2:
                 return 2
 
+# os scores dos player em que i=0 turno, i=1 player 1, i=2 player 2
+scores = [0,0,0]
 #while loop se continua com jogos novos
 while not QUIT: 
     board = np.zeros((HEIGHT,WIDTH))
-
+    scores[0] = 0
     # board for tests
     # board = [[0,0,0,0,0,0,0],
     #          [0,0,0,0,0,0,0],
@@ -213,6 +218,7 @@ while not QUIT:
     showBoard()
     # while loop do jogo que esta ocorrendo
     while GAME:
+        scores[0] += 1
         if turnP1:
             col = playerInput(PLAYER1)
             row = addPiece(PLAYER1, col)
@@ -227,9 +233,11 @@ while not QUIT:
         showBoard()
         if result == 1 or result == 2:
             print(f"Player {result} Wins")
+            scores[PLAYER1] += 1
             GAME = False
         elif result == -1:
             print("Draw")
+            scores[PLAYER2] += 1
             GAME = False
     valid = True
     while valid:
@@ -239,4 +247,5 @@ while not QUIT:
             QUIT = True
         elif replay == "y":
             valid = False
+            GAME = True
             
