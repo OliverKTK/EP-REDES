@@ -1,0 +1,14 @@
+- explicar a plataforma
+- incluir testes (se ele achar erro relatado o desconto é menor que erro não relatado)
+- explicar o protocolo
+- explicar o que o projeto faz
+    - connect4
+    - tipos de mensagem:
+        - conecta, pega ip
+        - escolha de bonequinho
+        - local da jogada
+        - dead mans trigger
+        - replay
+        - desconexão
+        - placar
+        - turno
