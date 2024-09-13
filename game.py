@@ -81,24 +81,25 @@ def checkHorizontal(player: int, row: int, col: int):
         if connected == NUMFORWIN:
             return True
         # verifica quantas pecas a esquerda da ultima adicionada pertencem ao mesmo player 
-        if tempCol - 1 >= 0 and left:
-            tempCol -= 1
-            if board[tempRow][tempCol] == player:
-                connected += 1
+        if left:
+            if tempCol - 1 >= 0:
+                tempCol -= 1
+                if board[tempRow][tempCol] == player:
+                    connected += 1
+                else:
+                    tempCol = col
+                    left = False
             else:
                 tempCol = col
                 left = False
-        elif left:
-            tempCol = col
-            left = False
         # se nao tiver mais pecas a esquerda volta a posicao da ultima adicionada e verifica as pecass a direita
-        if tempCol + 1 <= WIDTH -1 and not left:
+        elif tempCol + 1 <= WIDTH -1:
             tempCol += 1
             if board[tempRow][tempCol] == player:
                 connected += 1
             else:
                 return False
-        elif not (tempCol + 1 <= WIDTH -1): 
+        else: 
             return False
 
 def checkDiag1(player: int, row: int, col: int):
@@ -110,24 +111,25 @@ def checkDiag1(player: int, row: int, col: int):
         if connected == NUMFORWIN:
             return True
         # verifica quantas pecas na diagona(/) esquerda perntencem ao player
-        if tempCol - 1 >= 0 and tempRow + 1 <= HEIGHT -1 and bottomLeft:
-            tempCol -= 1; tempRow += 1
-            if board[tempRow][tempCol] == player:
-                connected += 1
+        if bottomLeft:
+            if tempCol - 1 >= 0 and tempRow + 1 <= HEIGHT -1:
+                tempCol -= 1; tempRow += 1
+                if board[tempRow][tempCol] == player:
+                    connected += 1
+                else:
+                    tempCol = col; tempRow = row
+                    bottomLeft = False
             else:
                 tempCol = col; tempRow = row
                 bottomLeft = False
-        elif bottomLeft:
-            tempCol = col; tempRow = row
-            bottomLeft = False
         # se nao tiver mais pecas na diagonal(/) esqueda verifica as da diagonal(/) direita  
-        if tempCol + 1 <= WIDTH -1 and tempRow - 1 >= 0 and not bottomLeft:
+        elif tempCol + 1 <= WIDTH -1 and tempRow - 1 >= 0:
             tempCol += 1; tempRow -= 1
             if board[tempRow][tempCol] == player:
                 connected += 1
             else:
                 return False 
-        elif not (tempCol + 1 <= WIDTH -1 and tempRow - 1 >= 0):
+        else:
             return False
         
 def checkDiag2(player: int, row: int, col: int):
@@ -139,24 +141,25 @@ def checkDiag2(player: int, row: int, col: int):
         if connected == NUMFORWIN:
             return True
         # verifica quantas pecas na diagona(\) esquerda perntencem ao player
-        if tempCol - 1 >= 0 and tempRow - 1 >= 0 and uppperLeft:
-            tempCol -= 1; tempRow -= 1
-            if board[tempRow][tempCol] == player:
-                connected += 1  
-            else:
+        if uppperLeft:
+            if tempCol - 1 >= 0 and tempRow - 1 >= 0:
+                tempCol -= 1; tempRow -= 1
+                if board[tempRow][tempCol] == player:
+                    connected += 1  
+                else:
+                    tempCol = col; tempRow = row
+                    uppperLeft = False
+            elif uppperLeft:
                 tempCol = col; tempRow = row
                 uppperLeft = False
-        elif uppperLeft:
-            tempCol = col; tempRow = row
-            uppperLeft = False
         # se nao tiver mais pecas na diagonal(\) esqueda verifica as da diagonal(\) direita 
-        if tempCol + 1 <= WIDTH -1 and tempRow + 1 <= HEIGHT -1 and not uppperLeft:  
+        elif tempCol + 1 <= WIDTH -1 and tempRow + 1 <= HEIGHT -1:  
             tempCol += 1; tempRow += 1
             if board[tempRow][tempCol] == player:
                 connected += 1
             else:
                 return False
-        elif not (tempCol + 1 <= WIDTH -1 and tempRow + 1 <= HEIGHT -1):
+        else:
             return False
 
 def checkWin(player: int, row: int, col: int):
