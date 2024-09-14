@@ -1,4 +1,4 @@
-import numpy as np
+from termcolor import colored
 import random as rd
 
 QUIT = False; GAME = True
@@ -15,14 +15,14 @@ def showBoard():
     for i in range(0, HEIGHT):
         for j in range(0, WIDTH):
             if board[i][j] == 0:
-                print("| |", end="")
+                print(colored("| |", "white"), end="")
             elif board[i][j] == 1:
-                print(f"|{charP1}|", end="")
+                print(colored(f"|{charP1}|", "red"), end="")
             else:
-                print(f"|{charP2}|",end="")
+                print(colored(f"|{charP2}|", "blue"),end="")
         print("")
     for i in range(0, WIDTH):
-        print(f"|{i+1}|", end="")
+        print(colored(f"|{i+1}|", "white"), end="")
     print("")
     
 def playerInput(player: int):
@@ -181,15 +181,14 @@ def checkWin(player: int, row: int, col: int):
 scores = [0,0,0]
 #while loop se continua com jogos novos
 while not QUIT: 
-    board = np.zeros((HEIGHT,WIDTH))
     scores[0] = 0
-    # board for tests
-    # board = [[0,0,0,0,0,0,0],
-    #          [0,0,0,0,0,0,0],
-    #          [0,0,0,0,0,0,0],
-    #          [0,0,0,0,0,0,0],
-    #          [0,0,0,0,0,0,0],
-    #          [0,0,0,0,0,0,0],]
+    # game board 
+    board = [[0,0,0,0,0,0,0],
+             [0,0,0,0,0,0,0],
+             [0,0,0,0,0,0,0],
+             [0,0,0,0,0,0,0],
+             [0,0,0,0,0,0,0],
+             [0,0,0,0,0,0,0],]
 
     charP1 = " "
     while charP1 == " " or len(charP1) > 1:
