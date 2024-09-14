@@ -10,7 +10,8 @@ empitySpaces = HEIGHT*WIDTH
 
 def showBoard():
     print("")
-    print(f"Player 1 - {scores[PLAYER1]} | Player 2 - {scores[PLAYER2]} ")
+    print(colored(f"Player 1 - {scores[PLAYER1]}", "red"), end="")
+    print(colored(f" | Player 2 - {scores[PLAYER2]} ", "blue"))
     print(f"Turn - {scores[0]}")
     for i in range(0, HEIGHT):
         for j in range(0, WIDTH):
