@@ -13,7 +13,6 @@ def showBoard():
     print(f"Player 1 - {scores[PLAYER1]} | Player 2 - {scores[PLAYER2]} ")
     print(f"Turn - {scores[0]}")
     for i in range(0, HEIGHT):
-        print("")
         for j in range(0, WIDTH):
             if board[i][j] == 0:
                 print("| |", end="")
@@ -21,7 +20,7 @@ def showBoard():
                 print(f"|{charP1}|", end="")
             else:
                 print(f"|{charP2}|",end="")
-    print("")
+        print("")
     for i in range(0, WIDTH):
         print(f"|{i+1}|", end="")
     print("")
