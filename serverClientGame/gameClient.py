@@ -7,7 +7,7 @@ clientMatch:g.match = None
 
 def handleCommand(command, connection):
     global clientMatch
-    print(command)
+    print(f"COMMAND: {command}")
     if "SHOWBOARD" in command:
         g.showBoard(clientMatch)
     if "INITMATCH" in command:
@@ -33,7 +33,7 @@ def handleCommand(command, connection):
                 connection.send("n".encode())
             elif replay == "y":
                 valid = False
-                connection.send("n".encode())
+                connection.send("y".encode())
 
 
 def clienteProgram():
@@ -57,7 +57,7 @@ def clienteProgram():
     charP2 = " " # pega o char de p2
     while charP2 == " " or charP2.lower() == charP1.lower() or len(charP2) > 1:
         if charP2.lower() == charP1.lower():
-            print("Choose a diffrent character")
+            print("Choose a different character")
         elif len(charP2) > 1:
             print("Choose only one character")
         charP2 = input("Player 2 character: ")

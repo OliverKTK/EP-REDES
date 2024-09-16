@@ -38,7 +38,7 @@ def serverProgram():
     while charP1 == " " or len(charP1) > 1:
         if len(charP1) > 1:
             print("Choose only one character")
-        charP1 = input("Player 1 character: ")
+        charP1 = input(f"[{nomeServidor}] character: ")
     conn.send(charP1.encode())
 
     print(f"Waiting for [{nomeCliente}]'s character selection...")
@@ -83,7 +83,7 @@ def serverProgram():
                 turnP1 = False
             else:
                 print(f"Waiting for [{nomeCliente}]...")
-                conn.send("ASKPLAY;".encode())
+                conn.send("ASKPLAY".encode())
                 col = int(conn.recv(1024).decode())
                 time.sleep(0.5)
                 row = g.addPiece(2, col, currentMatch) # vai ter que ser repetido em cliente
