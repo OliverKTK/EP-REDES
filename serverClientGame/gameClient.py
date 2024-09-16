@@ -1,35 +1,56 @@
-# THIS CLIENT STRUTURE ONLY WORKS FOR ONE CLIENT
+# THIS CLIENT STRUCTURE ONLY WORKS FOR ONE CLIENT
 
 import socket
 import gameLibrary as g
 
 clientMatch:g.match = None
 
-def handleCommand(command):
+def handleCommand(command, connection):
     global clientMatch
-    if command == "SHOWBOARD":
+    print(command)
+    if "SHOWBOARD" in command:
         g.showBoard(clientMatch)
-    elif "INITMATCH" in command:
+    if "INITMATCH" in command:
         temp = command.split(" ")
         scores = [temp[-3], temp[-2], temp[-1]]
         clientMatch = g.match(temp[1], temp[2], temp[3], temp[4], scores)
-    elif command == "ASKPLAY":
-        print("recebido pedido de jogada :D")
+    if "ASKPLAY" in command:
+        col = g.playerInput(2, clientMatch)
+        row = g.addPiece(2, col, clientMatch)
+        connection.send(f"{col}".encode())
+    if "REMOTEPLAY" in command:
+        col = command.split(" ")[-1]
+        row = g.addPiece(1, int(col), clientMatch)
+    if "NOTICE" in command:
+        msg = command.split(':')[1]
+        print(msg)
+    if "REPLAY" in command:
+        valid = True;
+        while valid:
+            replay = input("Replay?(y/n): ").lower()
+            if replay == "n":
+                valid = False
+                connection.send("n".encode())
+            elif replay == "y":
+                valid = False
+                connection.send("n".encode())
 
 
 def clienteProgram():
-    host = socket.gethostname() # as both codes are running on the same PC (needs to fix for multiple machines)
-    port = 5000 # socket server port number (needs to fic for multiple machines)
 
-    clientSocket = socket.socket() # instanciate
+    host = input("Host: ")
+    port = int(input("Port: "))
+
+    clientSocket = socket.socket() # instantiate
     clientSocket.connect((host, port)) # connect to server
 
-    nomeServidor = clientSocket.recv(1024).decode() # pega o nome do servidor (p1)
+    nomeServidor = clientSocket.recv(1024).decode() # gets server name (p1)
     print(f"Connected to [{nomeServidor}]")
 
-    nomeCliente = input('Player name: ') # pega o nome do cliente (p2)
+    nomeCliente = input('Player name: ') # gets client name (p2)
     clientSocket.send(nomeCliente.encode())
 
+    print(f"Waiting for [{nomeServidor}]'s character selection...")
     charP1 = clientSocket.recv(1024).decode() # pega o char de p1
     print(f"[{nomeServidor}] chose the character [{charP1}]")
 
@@ -43,8 +64,8 @@ def clienteProgram():
     clientSocket.send(charP2.encode())
 
     while True:
-        command = clientSocket.recv(1024).decode() # recebe alguma instrucao do servidor
-        handleCommand(command)
+        command = clientSocket.recv(1024).decode() # receives instruction
+        handleCommand(command, clientSocket) # passes the instruction to the handler
 
     clientSocket.close() # close the connection
 

@@ -47,19 +47,21 @@ def showBoard(match:match):
         print(colored(f"|{i+1}|", "white"), end="")
     print("")
     
-def playerInput(player: int, match:match):
+def playerInput(player:int, match:match):
     retry = True
     col = -1
     if player == 1:
         char = match.charP1
+        name = match.nameP1
     else:
         char = match.charP2
+        name = match.nameP2
     while retry:
         try:
-            col = int(input(f"Player {player} place a piece({char}): ")) -1
+            col = int(input(f"{name} place a piece({char}): ")) -1
             while col<0 or col>match.WIDTH:
                 print(f"Choose a number between 1 and {match.WIDTH}")
-                col = int(input(f"Player {player} place a piece({char}): ")) -1
+                col = int(input(f"{name} place a piece({char}): ")) -1
             return col 
         except ValueError:
             print("Please enter a number")
@@ -188,11 +190,10 @@ def checkDiag2(player: int, row: int, col: int, match:match):
 
 def checkWin(player: int, row: int, col: int, match:match):
     # verifica se o player ganhou ou se ocorreu um empate
-    global empitySpaces
-    if empitySpaces <= 0:
+    if match.emptySpaces <= 0:
         return -1
     else:
-        empitySpaces -= 1
+        match.emptySpaces -= 1
         if checkVertical(player, row, col, match) or checkHorizontal(player, row, col, match) or checkDiag1(player, row, col, match) or checkDiag2(player, row, col, match):
             if player == PLAYER1:
                 return 1
