@@ -9,7 +9,8 @@ import gameLibrary as g
 def serverProgram():
     # get hostname
     hostname = socket.gethostname()
-    host=socket.gethostbyname(hostname)
+    hostIP = socket.gethostbyname(hostname)
+    host=''
     port = 0
     while port<1024:
         port = int(input('Choose a port: '))
@@ -21,10 +22,10 @@ def serverProgram():
     serverSocket = socket.socket() #get instance
     serverSocket.bind((host, port))
 
-    # configure how many clients can listen simultaneously (2)
-    serverSocket.listen(4)
+    # configure how many clients can listen simultaneously (1)
+    serverSocket.listen(1)
 
-    nomeServidor = input("Player name: ") # pega o nome do servidor (p1)
+    nomeServidor = input("Player name: ").lower() # pega o nome do servidor (p1)
 
     print('Waiting for a connection...')
 
@@ -84,18 +85,18 @@ def serverProgram():
             else:
                 print(f"Waiting for [{nomeCliente}]...")
                 conn.send("ASKPLAY".encode())
-                col = int(conn.recv(1024).decode())
                 time.sleep(0.5)
+                col = int(conn.recv(1024).decode())
                 row = g.addPiece(2, col, currentMatch) # vai ter que ser repetido em cliente
                 result = g.checkWin(2, row, col, currentMatch)
                 turnP1 = True
 
+            time.sleep(0.5)
             g.showBoard(currentMatch)
             conn.send("SHOWBOARD".encode())
             time.sleep(0.5)
 
-            # ADAPTADO ATÉ ESTE PONTO
-            if result == 1 or result == 2: # tem que adaptar para exibir o nome do jogador em vez do número
+            if result == 1 or result == 2: # finaliza
                 if(result == 1):
                     msg = f'Player [{nomeServidor}] wins!'
                     currentMatch.scores[PLAYER1] += 1
@@ -108,16 +109,14 @@ def serverProgram():
                 currentMatch.scores[PLAYER2] += 1
                 GAME = False
             print(msg)
-            conn.send(f'{msg}'.encode())
+            conn.send(f'NOTICE:{msg}'.encode())
         valid = True
+        conn.send('REPLAY'.encode())
         replayClient = conn.recv(1024).decode()
-        time.sleep(0.5)
         while valid:
-            conn.send('REPLAY'.encode())
             replayServer = input("Replay?(y/n): ").lower()
-            time.sleep(0.5)
-            replayClient = conn.recv(1024).decode()
             if replayServer == "n" or replayClient == "n":
+                conn.send('QUIT'.encode())
                 valid = False
                 QUIT = True
             elif replayServer == "y" and replayClient == "y":

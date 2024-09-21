@@ -4,10 +4,12 @@ import socket
 import gameLibrary as g
 
 clientMatch:g.match = None
+QUIT:bool = False
 
 def handleCommand(command, connection):
     global clientMatch
-    print(f"COMMAND: {command}")
+    global QUIT
+    print(f"COMMAND: {command}") # debugger
     if "SHOWBOARD" in command:
         g.showBoard(clientMatch)
     if "INITMATCH" in command:
@@ -30,10 +32,12 @@ def handleCommand(command, connection):
             replay = input("Replay?(y/n): ").lower()
             if replay == "n":
                 valid = False
-                connection.send("n".encode())
+                connection.send('n'.encode())
             elif replay == "y":
                 valid = False
-                connection.send("y".encode())
+                connection.send('y'.encode())
+    if "QUIT" in command:
+        QUIT = True
 
 
 def clienteProgram():
@@ -44,10 +48,12 @@ def clienteProgram():
     clientSocket = socket.socket() # instantiate
     clientSocket.connect((host, port)) # connect to server
 
+    global QUIT
+
     nomeServidor = clientSocket.recv(1024).decode() # gets server name (p1)
     print(f"Connected to [{nomeServidor}]")
 
-    nomeCliente = input('Player name: ') # gets client name (p2)
+    nomeCliente = input('Player name: ').lower() # gets client name (p2)
     clientSocket.send(nomeCliente.encode())
 
     print(f"Waiting for [{nomeServidor}]'s character selection...")
@@ -60,10 +66,10 @@ def clienteProgram():
             print("Choose a different character")
         elif len(charP2) > 1:
             print("Choose only one character")
-        charP2 = input("Player 2 character: ")
+        charP2 = input(f"{nomeCliente} character: ")
     clientSocket.send(charP2.encode())
 
-    while True:
+    while not QUIT:
         command = clientSocket.recv(1024).decode() # receives instruction
         handleCommand(command, clientSocket) # passes the instruction to the handler
 
