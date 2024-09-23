@@ -1,4 +1,5 @@
 # PEER TO PEER
+# CLIENT PEER
 
 import socket
 import gameLibrary as g

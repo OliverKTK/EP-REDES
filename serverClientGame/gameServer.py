@@ -1,4 +1,5 @@
 # PEER TO PEER
+# SERVER PEER
 
 import socket
 import time
