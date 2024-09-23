@@ -1,4 +1,4 @@
-# THIS CLIENT STRUCTURE ONLY WORKS FOR ONE CLIENT
+# PEER TO PEER
 
 import socket
 import gameLibrary as g
@@ -9,7 +9,6 @@ QUIT:bool = False
 def handleCommand(command, connection):
     global clientMatch
     global QUIT
-    print(f"COMMAND: {command}") # debugger
     if "SHOWBOARD" in command:
         g.showBoard(clientMatch)
     if "INITMATCH" in command:

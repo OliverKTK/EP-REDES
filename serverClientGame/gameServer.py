@@ -1,5 +1,4 @@
-# THIS SERVER ONLY ACCEPTS ONE CLIENT
-# THE MESSAGES ARE EXCHANGED ONLY BETWEEN SERVER AND CLIENT
+# PEER TO PEER
 
 import socket
 import time
@@ -16,7 +15,7 @@ def serverProgram():
         port = int(input('Choose a port: '))
 
 
-    print(f"Host: [{hostname}] on IP address [{host}]")
+    print(f"Host: [{hostname}] on IP address [{hostIP}]")
     print(f"Port: {port}")
 
     serverSocket = socket.socket() #get instance
@@ -104,18 +103,29 @@ def serverProgram():
                     msg = f'Player [{nomeCliente}] wins!'
                     currentMatch.scores[PLAYER2] += 1
                 GAME = False
+                print(msg)
+                conn.send(f'NOTICE:{msg}'.encode())
             elif result == -1:
                 msg = 'Draw!'
                 currentMatch.scores[PLAYER2] += 1
                 GAME = False
-            print(msg)
-            conn.send(f'NOTICE:{msg}'.encode())
+                print(msg)
+                conn.send(f'NOTICE:{msg}'.encode())
         valid = True
         conn.send('REPLAY'.encode())
         replayClient = conn.recv(1024).decode()
         while valid:
             replayServer = input("Replay?(y/n): ").lower()
             if replayServer == "n" or replayClient == "n":
+                if replayServer == 'n' and replayClient == 'y':
+                    msg = f'[{nomeServidor}] quit'
+                elif replayServer == 'y' and replayClient == 'n':
+                    msg = f'[{nomeCliente}] quit'
+                elif replayServer == 'n' and replayClient == 'n':
+                    msg = f'Quitting game'
+                conn.send(f'NOTICE:{msg}'.encode())
+                print(f'{msg}')
+                time.sleep(0.5)
                 conn.send('QUIT'.encode())
                 valid = False
                 QUIT = True
