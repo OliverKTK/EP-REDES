@@ -16,10 +16,6 @@ def serverProgram():
     while port<1024:
         port = int(input('Choose a port: '))
 
-
-    print(f"Host: [{hostname}]")
-    print(f"Port: {port}")
-
     serverSocket = socket.socket() #get instance
     serverSocket.bind((host, port))
 
