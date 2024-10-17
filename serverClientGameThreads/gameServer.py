@@ -10,10 +10,8 @@ from markdown_it.rules_core.normalize import NULL_RE
 
 import gameLibrary as g
 
-totalWaitTime = 0
-
 def deadMansTrigger(): ## deadMansTrigger() function
-    global totalWaitTime
+    totalWaitTime = 0
     while True:
         totalWaitTime+=1
         fila.put(totalWaitTime)

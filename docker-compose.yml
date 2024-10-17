@@ -1,0 +1,30 @@
+services:
+  gserver:
+    build:
+      context: ./
+      dockerfile: ./docker/server/Dockerfile
+    tty: true
+    cap_add:
+      - NET_ADMIN
+    networks:
+      pygame:
+        ipv4_address: 172.19.0.2
+  gclient:
+    build:
+      context: ./
+      dockerfile: ./docker/client/Dockerfile
+    tty: true
+    cap_add:
+      - NET_ADMIN
+    networks:
+      pygame:
+        ipv4_address: 172.19.0.3
+networks:
+  pygame:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      -
+        subnet: 172.19.0.0/16
+    

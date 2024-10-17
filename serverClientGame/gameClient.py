@@ -1,4 +1,4 @@
-# PEER TO PEER
+# PEER TO PEER / CLIENT SERVER HYBRID
 # CLIENT PEER
 
 import socket
@@ -27,7 +27,7 @@ def handleCommand(command, connection):
         msg = command.split(':')[1]
         print(msg)
     if "REPLAY" in command:
-        valid = True;
+        valid = True
         while valid:
             replay = input("Replay?(y/n): ").lower()
             if replay == "n":
@@ -40,12 +40,12 @@ def handleCommand(command, connection):
         QUIT = True
 
 
-def clienteProgram():
+def clientProgram():
 
     host = input("Host: ")
     port = int(input("Port: "))
 
-    clientSocket = socket.socket() # instantiate
+    clientSocket = socket.socket() # instantiate socket
     clientSocket.connect((host, port)) # connect to server
 
     global QUIT
@@ -60,7 +60,7 @@ def clienteProgram():
     charP1 = clientSocket.recv(1024).decode() # pega o char de p1
     print(f"[{nomeServidor}] chose the character [{charP1}]")
 
-    charP2 = " " # pega o char de p2
+    charP2 = " " # gets p2's character
     while charP2 == " " or charP2.lower() == charP1.lower() or len(charP2) > 1:
         if charP2.lower() == charP1.lower():
             print("Choose a different character")
@@ -76,4 +76,4 @@ def clienteProgram():
     clientSocket.close() # close the connection
 
 if __name__ == '__main__':
-    clienteProgram()
+    clientProgram()
