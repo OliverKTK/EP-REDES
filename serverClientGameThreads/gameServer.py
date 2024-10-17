@@ -6,9 +6,8 @@ import time
 import threading
 import queue
 
-from markdown_it.rules_core.normalize import NULL_RE
+from serverClientGame import gameLibrary as g
 
-import gameLibrary as g
 
 def deadMansTrigger(): ## deadMansTrigger() function
     totalWaitTime = 0

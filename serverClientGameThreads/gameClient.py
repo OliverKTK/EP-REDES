@@ -5,7 +5,7 @@ import socket
 import time
 import threading
 
-import gameLibrary as g
+from serverClientGame import gameLibrary as g
 
 clientMatch:g.match = None
 QUIT:bool = False

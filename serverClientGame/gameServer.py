@@ -3,9 +3,9 @@
 
 import socket
 import time
-import termcolor
 
-import gameLibrary as g
+from serverClientGame import gameLibrary as g
+
 
 def serverProgram():
     # get hostname

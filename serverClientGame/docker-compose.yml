@@ -1,8 +1,8 @@
 services:
   gserver:
     build:
-      context: ./
-      dockerfile: ./docker/server/Dockerfile
+      context: ..
+      dockerfile: ../docker/server/Dockerfile
     tty: true
     cap_add:
       - NET_ADMIN
@@ -11,8 +11,8 @@ services:
         ipv4_address: 172.19.0.2
   gclient:
     build:
-      context: ./
-      dockerfile: ./docker/client/Dockerfile
+      context: ..
+      dockerfile: ../docker/client/Dockerfile
     tty: true
     cap_add:
       - NET_ADMIN

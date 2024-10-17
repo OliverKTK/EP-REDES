@@ -2,7 +2,7 @@
 # CLIENT PEER
 
 import socket
-import gameLibrary as g
+from serverClientGame import gameLibrary as g
 
 clientMatch:g.match = None
 QUIT:bool = False
