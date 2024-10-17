@@ -4,7 +4,7 @@
 import socket
 import time
 
-from serverClientGame import gameLibrary as g
+import gameLibrary as g
 
 
 def serverProgram():
