@@ -12,7 +12,7 @@ import gameLibrary as g
 
 totalWaitTime = 0
 
-def deadMansTrigger():
+def deadMansTrigger(): ## deadMansTrigger() function
     global totalWaitTime
     while True:
         totalWaitTime+=1

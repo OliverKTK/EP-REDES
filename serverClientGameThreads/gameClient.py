@@ -10,7 +10,7 @@ import gameLibrary as g
 clientMatch:g.match = None
 QUIT:bool = False
 
-def deadMansTrigger():
+def deadMansTrigger(): ## deadMansTrigger() function
     totalWaitTime = 0
     while totalWaitTime < 60:
         totalWaitTime+=1
